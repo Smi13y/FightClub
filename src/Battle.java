@@ -7,17 +7,24 @@ public class Battle {
     /*
     * A method to calculate damage dealt to defending character
      */
-    public void calculateDamage(Character player1, Character player2){
+    public int calculateDamage(Character player1, Character player2){
         if(isAttackMagic(player1)){
             totalDamage = attackMagic(player1) - defendMagic(player2);
         } else{
             totalDamage = attack(player1) - defend(player2);
         }
 
-        if(totalDamage > 0){
-            player2.setTempHitPoints(player2.getTempHitPoints() - totalDamage);
+        if(totalDamage < 1){
+            totalDamage = 0;
         }
 
+        return totalDamage;
+    }
+    /*
+    * Deal damage dealt from attacking player to defending player
+     */
+    public void dealDamage(Character player1, Character player2){
+        player2.setTempHitPoints(player2.getTempHitPoints() - calculateDamage(player1, player2));
     }
 
     /*
@@ -107,11 +114,9 @@ public class Battle {
             case "Brawl":
                 if(rollValue > 4){
                     isMagic = true;
-                } else{
+                } else {
                     isMagic = false;
                 }
-            default:
-                isMagic = false;
         }
 
         return isMagic;
