@@ -76,4 +76,9 @@ public class Character {
     public void setTempHitPoints(int tempHitPoints) {
         this.tempHitPoints = tempHitPoints;
     }
+
+    public String toString(){
+        return "Name: " + name + "\nTendency: " + tendency + "\nHitpoints: "+ hitPoints + "\nAttack: "
+                + atk + "\nDefense: " + def + "\nMagic Attack: " + mAtk + "\nMagic Defense: " + mDef;
+    }
 }
