@@ -1,124 +1,57 @@
-
-
 public class Battle {
-    int rollValue, attackDamage, blockDamage, totalDamage;
-    boolean isMagic;
+    private boolean fightOver;
+    private int roundLimit;
+    private static final int ROUND = 1;
 
+    public static void fight(Character player1, Character player2){
+        player1.setTempHitPoints(player1.getHitPoints());
+        player2.setTempHitPoints(player2.getHitPoints());
+        int r = ROUND;
+        while(!isFightOver(player1, player2)){
+            System.out.println("================");
+            System.out.println("Round " + r + " FIGHT!");
+            System.out.println("================");
+            round(player1, player2);
+            System.out.println("================");
+            System.out.println("Round " + r + " OVER!");
+            System.out.println("================");
+            r++;
+        }
+            declareWinner(player1, player2);
+    }
+    public static void round(Character player1, Character player2){
+        Commands.dealDamage(player1, player2);
+        Commands.dealDamage(player2, player1);
+
+    }
+
+    public static boolean isFightOver(Character player1, Character player2){
+        if(Commands.checkKO(player1) || Commands.checkKO(player2) || isDraw(player1, player2)){
+            return true;
+        }
+        return false;
+    }
     /*
-    * A method to calculate damage dealt to defending character
+    * This method determines whether or not the fight is over by KnockOut
+    * This method might be useless
      */
-    public int calculateDamage(Character player1, Character player2){
-        if(isAttackMagic(player1)){
-            totalDamage = attackMagic(player1) - defendMagic(player2);
+    public static void declareWinner(Character player1, Character player2){
+        if(Commands.checkKO(player1) && !Commands.checkKO(player2)){
+            System.out.println(player2.getName() + " wins by KO!");
+        }else if(!Commands.checkKO(player1) && Commands.checkKO(player2)){
+            System.out.println(player1.getName() + " wins by KO!");
+        }else if(isDraw(player1, player2)){
+            System.out.println("It's a draw!");
+        }
+    }
+    public static boolean isDraw(Character player1, Character player2){
+
+        if(Commands.checkKO(player1) && Commands.checkKO(player2)){
+            return true;
         } else{
-            totalDamage = attack(player1) - defend(player2);
+            return false;
         }
 
-        if(totalDamage < 1){
-            totalDamage = 0;
-        }
-
-        return totalDamage;
-    }
-    /*
-    * Deal damage dealt from attacking player to defending player
-     */
-    public void dealDamage(Character player1, Character player2){
-        player2.setTempHitPoints(player2.getTempHitPoints() - calculateDamage(player1, player2));
     }
 
-    /*
-    * Method to determine attack damage
-     */
-    public int attack(Character player){
-        attackDamage = 0;
-        for(int i = 1; i <= player.getAtk(); i++){
-            rollValue = roll(6);
-            if(rollValue >4 && rollValue < 7)
-                attackDamage++;
-        }
-
-        return attackDamage;
-    }
-
-    /*
-    * Method to determine damage blocked
-     */
-    public int defend(Character player){
-        blockDamage = 0;
-        for(int i = 1; i <= player.getAtk(); i++){
-            rollValue = roll(6);
-            if(rollValue >4 && rollValue < 7)
-                blockDamage++;
-        }
-
-        return blockDamage;
-    }
-
-    /*
-    * Method to determine magic attack damage
-     */
-    public int attackMagic(Character player){
-        attackDamage = 0;
-        for(int i = 1; i <= player.getmAtk(); i++){
-            rollValue = roll(6);
-            if(rollValue > 4 && rollValue < 7)
-                attackDamage++;
-        }
-
-        return attackDamage;
-    }
-
-    /*
-    * Method to determine blocked magic damage
-     */
-    public int defendMagic(Character player){
-        blockDamage = 0;
-        for(int i = 1; i <= player.getmDef(); i++){
-            rollValue = roll(6);
-            if(rollValue >4 && rollValue < 7)
-                blockDamage++;
-        }
-
-        return blockDamage;
-    }
-
-    /*
-    * Method to roll a die of any size
-     */
-    public int roll(int index){
-        rollValue = (int) (Math.random()*index)+1;
-        return rollValue;
-    }
-
-    /*
-    * Method to determine if a character will be attacking with
-    * a normal attack or a magic attack based on the character's
-    * tendency.
-     */
-    public boolean isAttackMagic(Character player){
-        rollValue = roll(6);
-        switch(player.getTendency()){
-            case "Balance":
-                if(rollValue > 3){
-                    isMagic = true;
-                } else{
-                    isMagic = false;
-                }
-            case "Magic":
-                if(rollValue > 2){
-                    isMagic = true;
-                } else{
-                    isMagic = false;
-                }
-            case "Brawl":
-                if(rollValue > 4){
-                    isMagic = true;
-                } else {
-                    isMagic = false;
-                }
-        }
-
-        return isMagic;
-    }
 }
