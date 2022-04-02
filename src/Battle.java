@@ -4,7 +4,10 @@ public class Battle {
     int rollValue, attackDamage, blockDamage, totalDamage;
     boolean isMagic;
 
-    public void fight(Character player1, Character player2){
+    /*
+    * A method to calculate damage dealt to defending character
+     */
+    public void calculateDamage(Character player1, Character player2){
         if(isAttackMagic(player1)){
             totalDamage = attackMagic(player1) - defendMagic(player2);
         } else{
@@ -16,6 +19,10 @@ public class Battle {
         }
 
     }
+
+    /*
+    * Method to determine attack damage
+     */
     public int attack(Character player){
         attackDamage = 0;
         for(int i = 1; i <= player.getAtk(); i++){
@@ -27,6 +34,9 @@ public class Battle {
         return attackDamage;
     }
 
+    /*
+    * Method to determine damage blocked
+     */
     public int defend(Character player){
         blockDamage = 0;
         for(int i = 1; i <= player.getAtk(); i++){
@@ -38,6 +48,9 @@ public class Battle {
         return blockDamage;
     }
 
+    /*
+    * Method to determine magic attack damage
+     */
     public int attackMagic(Character player){
         attackDamage = 0;
         for(int i = 1; i <= player.getmAtk(); i++){
@@ -49,6 +62,9 @@ public class Battle {
         return attackDamage;
     }
 
+    /*
+    * Method to determine blocked magic damage
+     */
     public int defendMagic(Character player){
         blockDamage = 0;
         for(int i = 1; i <= player.getmDef(); i++){
@@ -60,11 +76,19 @@ public class Battle {
         return blockDamage;
     }
 
+    /*
+    * Method to roll a die of any size
+     */
     public int roll(int index){
         rollValue = (int) (Math.random()*index)+1;
         return rollValue;
     }
 
+    /*
+    * Method to determine if a character will be attacking with
+    * a normal attack or a magic attack based on the character's
+    * tendency.
+     */
     public boolean isAttackMagic(Character player){
         rollValue = roll(6);
         switch(player.getTendency()){
