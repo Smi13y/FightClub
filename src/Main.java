@@ -3,6 +3,6 @@ public class Main {
         Character ryu = new Character("Ryu", "Balance", 3, 3, 3, 3, 50);
         Character ken = new Character("Ken", "Balance", 3, 3, 3, 3, 50);
 
-        Battle.fight(ryu,ken);
+        Battle.fight(ryu,ken, 180);
     }
 }

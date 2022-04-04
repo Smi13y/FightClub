@@ -1,17 +1,24 @@
 public class Battle {
     private boolean fightOver;
-    private int roundLimit;
+    private static int roundTimer, minutes, seconds, roundMax;
+    private String timerOutput;
     private static final int ROUND = 1;
 
-    public static void fight(Character player1, Character player2){
+
+    public static void fight(Character player1, Character player2, int roundMax){
         player1.setTempHitPoints(player1.getHitPoints());
         player2.setTempHitPoints(player2.getHitPoints());
         int r = ROUND;
         while(!isFightOver(player1, player2)){
+            roundTimer = 0;
             System.out.println("================");
             System.out.println("Round " + r + " FIGHT!");
             System.out.println("================");
-            round(player1, player2);
+            while(roundTimer < roundMax){
+                roundTimer = roundTimer + Commands.roll(10);
+                round(player1, player2);
+                timerPrint(roundTimer, roundMax);
+            }
             System.out.println("================");
             System.out.println("Round " + r + " OVER!");
             System.out.println("================");
@@ -23,6 +30,19 @@ public class Battle {
         Commands.dealDamage(player1, player2);
         Commands.dealDamage(player2, player1);
 
+    }
+
+    public static void timerPrint(int roundTimer, int roundMax){
+        minutes = roundTimer / 60;
+        seconds = roundTimer % 60;
+
+        if(roundTimer >= roundMax){
+            System.out.println("====="+minutes+":"+ "00"+"=====");
+        }else if(seconds < 10){
+            System.out.println("====="+minutes+":"+ "0" + seconds + "=====");
+        } else{
+            System.out.println("====="+minutes+":"+seconds + "=====");
+        }
     }
 
     public static boolean isFightOver(Character player1, Character player2){
