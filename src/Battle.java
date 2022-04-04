@@ -22,6 +22,13 @@ public class Battle {
             System.out.println("================");
             System.out.println("Round " + r + " OVER!");
             System.out.println("================");
+            System.out.println("");
+
+            if(!isFightOver(player1, player2)){
+                Commands.rest(player1);
+                Commands.rest(player2);
+            }
+            System.out.println("");
             r++;
         }
             declareWinner(player1, player2);

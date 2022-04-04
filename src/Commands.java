@@ -1,10 +1,7 @@
 
 
 public class Commands {
-    private static int rollValue;
-    private static int attackDamage;
-    private static int blockDamage;
-    private static int totalDamage;
+    private static int rollValue, attackDamage, blockDamage, totalDamage, rest;
     private static boolean isMagic;
 
     /*
@@ -119,5 +116,11 @@ public class Commands {
                 isMagic = rollValue > 4;
         }
         return isMagic;
+    }
+
+    public static void rest(Character player){
+        rest = roll(15);
+        player.setTempHitPoints(player.getTempHitPoints() + rest);
+        System.out.println(player.getName()+ " rested and gained " + rest + "HP");
     }
 }
