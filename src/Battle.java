@@ -14,7 +14,7 @@ public class Battle {
             System.out.println("================");
             System.out.println("Round " + r + " FIGHT!");
             System.out.println("================");
-            while(roundTimer < roundMax){
+            while(roundTimer < roundMax && !isFightOver(player1, player2)){
                 roundTimer = roundTimer + Commands.roll(10);
                 round(player1, player2);
                 timerPrint(roundTimer, roundMax);
