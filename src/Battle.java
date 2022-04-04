@@ -14,10 +14,15 @@ public class Battle {
             System.out.println("================");
             System.out.println("Round " + r + " FIGHT!");
             System.out.println("================");
-            while(roundTimer < roundMax && !isFightOver(player1, player2)){
-                roundTimer = roundTimer + Commands.roll(10);
-                round(player1, player2);
-                timerPrint(roundTimer, roundMax);
+            try {
+                while (roundTimer < roundMax && !isFightOver(player1, player2)) {
+                    roundTimer = roundTimer + Commands.roll(10);
+                    Thread.sleep(roundTimer*1000);
+                    round(player1, player2);
+                    timerPrint(roundTimer, roundMax);
+                }
+            } catch (Exception e){
+                System.out.println(e);
             }
             System.out.println("================");
             System.out.println("Round " + r + " OVER!");
@@ -33,6 +38,7 @@ public class Battle {
         }
             declareWinner(player1, player2);
     }
+
     public static void round(Character player1, Character player2){
         Commands.dealDamage(player1, player2);
         Commands.dealDamage(player2, player1);
